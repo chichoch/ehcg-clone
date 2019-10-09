@@ -3,7 +3,7 @@ A React app for the beef using Firebase as backend and is built with React.
 ## TODO:
 - Connect to firebase
 
-<br/>
+___
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

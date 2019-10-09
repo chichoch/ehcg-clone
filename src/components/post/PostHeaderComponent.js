@@ -4,11 +4,12 @@ import AuthorComponent from '../comment/AuthorComponent';
 
 export default class PostHeaderComponent extends Component {
   render() {
+    const author = this.props.author;
     return (
       <div className="PostHeaderComponent">
         <AuthorComponent />
         <b className="PostHeaderText">
-          Du 👉 Folkets hardcore-grupp
+          {author} 👉 Folkets hardcore-grupp
         </b>
       </div>
     );

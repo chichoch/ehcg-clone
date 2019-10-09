@@ -4,6 +4,9 @@ import CreatePostComponent from './components/create_post/CreatePostComponent';
 import PostComponent from './components/post/PostComponent';
 import SizeWrapper from './components/SizeWrapper';
 import { postRef } from './firebase';
+import { CreateAuthorComponent } from './components/CreateAuthorComponent';
+
+export const AUTHOR_KEY = 'ehcg_session_user';
 
 class App extends Component {
   constructor(props) {
@@ -14,13 +17,21 @@ class App extends Component {
         content: '',
         footer: '',
       },
-      posts: []
+      posts: [],
+      author: null,
     }
 
     this.handlePostSubmit = this.handlePostSubmit.bind(this);
   }
 
   componentDidMount() {
+    const authorName = sessionStorage.getItem(AUTHOR_KEY);
+    if (authorName) {
+      this.setState({author: {
+        name: authorName
+      }});
+    }
+
     postRef.on('value', snapshot => {
       const data = snapshot.val();
       console.log(data);
@@ -33,6 +44,7 @@ class App extends Component {
             footer: value.footer,
             timestamp: value.timestamp,
             comments: value.comments,
+            author: value.author,
           });
         });
 
@@ -49,15 +61,41 @@ class App extends Component {
     postRef.push().set(posted.post);
   }
 
+  setAuthor = (name) => {
+    const newAuthor = {
+      name: name, // TODO Add image
+    };
+    sessionStorage.setItem(AUTHOR_KEY, name);
+    this.setState({
+      author: newAuthor,
+    });
+    console.log('New Author', newAuthor);
+  }
+
   render() {
+    const {author} = this.state;
+    if (!author) {
+      return (
+        <SizeWrapper>
+          <div>
+            <CreateAuthorComponent
+              setAuthor={this.setAuthor}
+            />
+          </div>
+        </SizeWrapper>
+      )
+    }
+
+    console.log('Author', author);
     return (
       <SizeWrapper>
         <div>
           <CreatePostComponent className="CreatePost"
             onSubmit={this.handlePostSubmit}
             post={this.state.post}
+            author={author}
           />
-          {this.state.posts.map((obj, i) => <PostComponent post={obj} key={i} />)}
+          {this.state.posts.map((obj, i) => <PostComponent post={obj} key={i} author={author} />)}
         </div>
       </SizeWrapper>
     );

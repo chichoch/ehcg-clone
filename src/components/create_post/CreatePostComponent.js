@@ -8,7 +8,8 @@ export default class CreatePostComponent extends Component {
     this.state = {
       header: this.props.post.header,
       content: this.props.post.content,
-      footer: this.props.post.footer
+      footer: this.props.post.footer,
+      author: this.props.author,
     }
 
     this.handleHeaderChange = this.handleHeaderChange.bind(this);
@@ -30,21 +31,22 @@ export default class CreatePostComponent extends Component {
   }
 
   handleSubmit(event) {
-      this.props.onSubmit({
-        post: {
-          header: this.state.header,
-          content: this.state.content,
-          footer: this.state.footer,
-          timestamp: Date.now(),
-          comments: {},
-        }
-      });
-      event.preventDefault();
-      this.setState({
-        header: '',
-        content: '',
-        footer: ''
-      });
+    this.props.onSubmit({
+      post: {
+        header: this.state.header,
+        content: this.state.content,
+        footer: this.state.footer,
+        author: this.state.author.name,
+        timestamp: Date.now(),
+        comments: {},
+      }
+    });
+    event.preventDefault();
+    this.setState({
+      header: '',
+      content: '',
+      footer: ''
+    });
   }
 
   render() {

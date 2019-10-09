@@ -19,7 +19,7 @@ export default class CommentComponent extends Component {
           </div>
           <div className="CommentContent">
             <b>
-              {author.name + ' '}
+              {author + ' '}
             </b>
             {content}
           </div>

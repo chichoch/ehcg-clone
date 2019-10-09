@@ -24,8 +24,16 @@
 }
 
 .AddComment {
-  flex: 1;
-  background-color: aquamarine;
+  background-color: #ebedf0;
+  border-radius: 8px;
+  margin: 10px;
+  justify-items: flex-end;
+}
+
+.Textarea {
+  width: 310px;
+  border-radius: 2px;
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 hr {

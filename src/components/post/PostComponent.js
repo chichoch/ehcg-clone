@@ -25,8 +25,8 @@ class PostComponent extends Component {
   }
 
   handleSubmit = () => {
-    const author = {name: 'Du'}; // TODO Implement auth.
-    const newComment = new Comment(author, this.state.newComment);
+    const author = this.props.author;
+    const newComment = new Comment(author.name, this.state.newComment);
     postRef.child(this.props.post.id).child('comments').push().set(newComment);
     this.setState({newComment: ''});
   }
@@ -41,7 +41,7 @@ class PostComponent extends Component {
       <CSSTransition
         timeout={500}>
         <div className="Post">
-          <PostHeaderComponent />
+          <PostHeaderComponent author={this.props.post.author}/>
           <div className="PostContent">
             Hej Folkets {post.header}-grupp!
             <br/><br/>
@@ -55,14 +55,16 @@ class PostComponent extends Component {
           </div>
           <div className="AddComment">
             <TextareaAutosize
-              className="TextareaAutosize"
+              className="Textarea"
               type="text"
               value={newComment}
               onChange={this.handleCommentChange}
-              placeholder=''
+              placeholder='Kommentera...'
               rows={1}
             />
-            <button type="submit" onClick={this.handleSubmit}>SUBMIT</button>
+            <button type="submit" onClick={this.handleSubmit}>
+              <h4>Skicka</h4>
+            </button>
           </div>
         </div>
       </CSSTransition>

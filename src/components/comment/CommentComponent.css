@@ -1,0 +1,36 @@
+.Comment {
+  margin-top: 3px;
+  margin-bottom: 5px;
+  width: 21rem;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  transition: height 500ms 0ms, opacity 500ms 500ms;
+
+  /* Flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.CommentContent {
+  margin-left: 5px;
+  padding: 9px;
+  background-color: #ebedf0;
+  border-radius: 18px;
+  white-space: pre-wrap;
+}
+
+b {
+  color: #365899;
+}
+
+.example-appear {
+  opacity: 0.01;
+}
+
+.example-appear.example-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}

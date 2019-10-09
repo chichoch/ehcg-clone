@@ -1,0 +1,9 @@
+.PostHeaderComponent {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.PostHeaderText {
+  padding-left: 6px;
+}

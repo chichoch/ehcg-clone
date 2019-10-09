@@ -3,6 +3,7 @@ import './App.css';
 import CreatePostComponent from './components/create_post/CreatePostComponent';
 import PostComponent from './components/post/PostComponent';
 import SizeWrapper from './components/SizeWrapper';
+import { postRef } from './firebase';
 
 class App extends Component {
   constructor(props) {
@@ -19,12 +20,23 @@ class App extends Component {
     this.handlePostSubmit = this.handlePostSubmit.bind(this);
   }
 
-  handlePostSubmit(posted) {
-    var posts = this.state.posts;
-    posts.push(posted.post);
-    this.setState({
-      posts: posts
+  componentDidMount() {
+    postRef.on('value', snapshot => {
+      const data = snapshot.val();
+      console.log(data);
+      if (data) {
+        const dataArray = Object.values(data);
+        const posts = dataArray.sort((a, b) => b.timestamp - a.timestamp);
+        console.log(posts);
+        this.setState({
+          posts: posts
+        });
+      }
     });
+  }
+
+  handlePostSubmit(posted) {
+    postRef.push().set(posted.post);
   }
 
   render() {

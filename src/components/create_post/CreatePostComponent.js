@@ -34,7 +34,8 @@ export default class CreatePostComponent extends Component {
         post: {
           header: this.state.header,
           content: this.state.content,
-          footer: this.state.footer
+          footer: this.state.footer,
+          timestamp: Date.now(),
         }
       });
       event.preventDefault();

@@ -32,11 +32,12 @@ class App extends Component {
             content: value.content,
             footer: value.footer,
             timestamp: value.timestamp,
+            comments: value.comments,
           });
         });
 
         const posts = array.sort((a, b) => b.timestamp - a.timestamp);
-        console.log(posts);
+        console.log('Posts', posts);
         this.setState({
           posts: posts
         });

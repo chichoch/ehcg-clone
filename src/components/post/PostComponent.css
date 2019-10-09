@@ -23,6 +23,11 @@
   margin-right: auto;
 }
 
+.AddComment {
+  flex: 1;
+  background-color: aquamarine;
+}
+
 hr {
     border: 0;
     height: 0;

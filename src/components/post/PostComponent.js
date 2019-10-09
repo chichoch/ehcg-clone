@@ -3,6 +3,9 @@ import './PostComponent.css';
 import PostHeaderComponent from './PostHeaderComponent';
 import CommentComponent from '../comment/CommentComponent';
 import { CSSTransition } from 'react-transition-group'
+import Comment from '../../model/Comment';
+import TextareaAutosize from 'react-autosize-textarea/lib';
+import { postRef } from '../../firebase';
 
 class PostComponent extends Component {
   constructor(props) {
@@ -11,15 +14,29 @@ class PostComponent extends Component {
       header: this.props.post.header,
       content: this.props.post.content,
       footer: this.props.post.footer,
-      comments: [],
       commentIndex: 0,
       intervalId: 0,
+      newComment: '',
     }
+  }
+
+  handleCommentChange = (event) => {
+    this.setState({newComment: event.target.value});
+  }
+
+  handleSubmit = () => {
+    const author = {name: 'Du'}; // TODO Implement auth.
+    const newComment = new Comment(author, this.state.newComment);
+    postRef.child(this.props.post.id).child('comments').push().set(newComment);
+    this.setState({newComment: ''});
   }
 
   render() {
     const {post} = this.props;
-    const {comments} = this.state;
+    const {newComment} = this.state;
+
+    const comments = post.comments ? Object.values(post.comments) : [];
+    
     return (
       <CSSTransition
         timeout={500}>
@@ -35,6 +52,17 @@ class PostComponent extends Component {
           <hr/>
           <div className="Comments">
             {comments.map((obj, i) => <CommentComponent comment={obj} key={i}/>)}
+          </div>
+          <div className="AddComment">
+            <TextareaAutosize
+              className="TextareaAutosize"
+              type="text"
+              value={newComment}
+              onChange={this.handleCommentChange}
+              placeholder=''
+              rows={1}
+            />
+            <button type="submit" onClick={this.handleSubmit}>SUBMIT</button>
           </div>
         </div>
       </CSSTransition>

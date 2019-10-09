@@ -8,15 +8,11 @@ export default class CommentComponent extends Component {
 
   render() {
     const {comment} = this.props;
-    const author = comment.getAuthor();
-    const content = comment.getContent();
+    const author = comment.author;
+    const content = comment.content;
     return (
       <CSSTransition
-        transitionName="example"
-        transitionAppear={true}
-        transitionAppearTimeout={500}
-        transitionEnter={false}
-        transitionLeave={false}>
+        timeout={500}>
         <div className="Comment" key={1}>
           <div className="CommentAuthor">
             <AuthorComponent src={author.img}/>

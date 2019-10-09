@@ -25,8 +25,17 @@ class App extends Component {
       const data = snapshot.val();
       console.log(data);
       if (data) {
-        const dataArray = Object.values(data);
-        const posts = dataArray.sort((a, b) => b.timestamp - a.timestamp);
+        const array = Object.entries(data).map(([key, value]) => {
+          return({
+            id: key,
+            header: value.header,
+            content: value.content,
+            footer: value.footer,
+            timestamp: value.timestamp,
+          });
+        });
+
+        const posts = array.sort((a, b) => b.timestamp - a.timestamp);
         console.log(posts);
         this.setState({
           posts: posts

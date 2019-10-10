@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './CommentComponent.css';
 import AuthorComponent from './AuthorComponent';
 import { CSSTransition } from 'react-transition-group'
+import Korven from '../Korven';
 
 
 export default class CommentComponent extends Component {
@@ -9,7 +10,7 @@ export default class CommentComponent extends Component {
   render() {
     const {comment} = this.props;
     const author = comment.author;
-    const content = comment.content;
+    const content = comment.content.trim() === ':korv:' ? <Korven /> : comment.content;
     return (
       <CSSTransition
         timeout={500}>

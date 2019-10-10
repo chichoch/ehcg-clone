@@ -42,13 +42,12 @@ class App extends Component {
             header: value.header,
             content: value.content,
             footer: value.footer,
-            timestamp: value.timestamp,
             comments: value.comments,
             author: value.author,
           });
         });
 
-        const posts = array.sort((a, b) => b.timestamp - a.timestamp);
+        const posts = array.sort((a, b) => ('' + b.id).localeCompare(a.id));
         console.log('Posts', posts);
         this.setState({
           posts: posts

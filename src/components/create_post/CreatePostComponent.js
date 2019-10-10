@@ -37,7 +37,6 @@ export default class CreatePostComponent extends Component {
         content: this.state.content,
         footer: this.state.footer,
         author: this.state.author.name,
-        timestamp: Date.now(),
         comments: {},
       }
     });

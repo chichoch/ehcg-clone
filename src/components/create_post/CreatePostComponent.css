@@ -1,13 +1,12 @@
 .CreatePost {
- background: white;
- padding: 15px;
- border-radius: 8px;
- width: 21rem;
- margin-top: 8px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  width: 21rem;
+  margin-top: 8px;
 }
 
 .CreatePostHeader {
-
 }
 
 .TextareaAutosize {
@@ -43,4 +42,12 @@ button {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+}
+
+.error {
+  background-color: #e0483d;
+  margin-top: 10px;
+  padding: 4px;
+  border-radius: 8px;
+  color: white;
 }

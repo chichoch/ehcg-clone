@@ -26,7 +26,7 @@ class PostComponent extends Component {
   };
 
   handleSubmit = () => {
-    const { comment } = this.state;
+    const { newComment: comment } = this.state;
 
     if (!comment) {
       this.setState({ ...this.state, error: "Öh, du måste skriva nått" });

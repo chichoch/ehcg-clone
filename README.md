@@ -1,4 +1,5 @@
 A React app for the beef using Firebase as backend and is built with React.  
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/3af47d52-b346-4b8a-9d7e-0809db6acfb7/deploy-status)](https://app.netlify.com/sites/fhcg-clone/deploys)
 ___
 

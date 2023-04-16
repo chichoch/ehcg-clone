@@ -1,25 +1,27 @@
-import React, { Component } from 'react';
-import './App.css';
-import CreatePostComponent from './components/create_post/CreatePostComponent';
-import PostComponent from './components/post/PostComponent';
-import SizeWrapper from './components/SizeWrapper';
-import { postRef } from './firebase';
-import { CreateAuthorComponent } from './components/CreateAuthorComponent';
+import React, { Component } from "react";
+import "./App.css";
+import CreatePostComponent from "./components/create_post/CreatePostComponent";
+import PostComponent from "./components/post/PostComponent";
+import SizeWrapper from "./components/SizeWrapper";
+import { postRef } from "./firebase";
+import { CreateAuthorComponent } from "./components/CreateAuthorComponent";
+import { onValue } from "firebase/database";
 
-export const AUTHOR_KEY = 'ehcg_session_user';
+export const AUTHOR_KEY = "ehcg_session_user";
 
+// TODO Rewrite as a functional component?
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       post: {
-        header: '',
-        content: '',
-        footer: '',
+        header: "",
+        content: "",
+        footer: "",
       },
       posts: [],
       author: null,
-    }
+    };
 
     this.handlePostSubmit = this.handlePostSubmit.bind(this);
   }
@@ -27,37 +29,41 @@ class App extends Component {
   componentDidMount() {
     const authorName = sessionStorage.getItem(AUTHOR_KEY);
     if (authorName) {
-      this.setState({author: {
-        name: authorName
-      }});
+      this.setState({
+        author: {
+          name: authorName,
+        },
+      });
     }
 
-    postRef.on('value', snapshot => {
+    onValue(postRef, (snapshot) => {
       const data = snapshot.val();
       console.log(data);
       if (data) {
         const array = Object.entries(data).map(([key, value]) => {
-          return({
+          return {
             id: key,
             header: value.header,
             content: value.content,
             footer: value.footer,
             comments: value.comments,
             author: value.author,
-          });
+          };
         });
 
-        const posts = array.sort((a, b) => ('' + b.id).localeCompare(a.id));
-        console.log('Posts', posts);
+        const posts = array.sort((a, b) => ("" + b.id).localeCompare(a.id));
+        console.log("Posts", posts);
         this.setState({
-          posts: posts
+          posts: posts,
         });
       }
     });
   }
 
   handlePostSubmit(posted) {
-    postRef.push().set(posted.post);
+    // TODO UPDATE, this wont work!
+    // postRef.push().set(posted.post);
+    console.log("### Needs to be re-implemented!");
   }
 
   setAuthor = (name) => {
@@ -68,33 +74,34 @@ class App extends Component {
     this.setState({
       author: newAuthor,
     });
-    console.log('New Author', newAuthor);
-  }
+    console.log("New Author", newAuthor);
+  };
 
   render() {
-    const {author} = this.state;
+    const { author } = this.state;
     if (!author) {
       return (
         <SizeWrapper>
           <div>
-            <CreateAuthorComponent
-              setAuthor={this.setAuthor}
-            />
+            <CreateAuthorComponent setAuthor={this.setAuthor} />
           </div>
         </SizeWrapper>
-      )
+      );
     }
 
-    console.log('Author', author);
+    console.log("Author", author);
     return (
       <SizeWrapper>
         <div>
-          <CreatePostComponent className="CreatePost"
+          <CreatePostComponent
+            className="CreatePost"
             onSubmit={this.handlePostSubmit}
             post={this.state.post}
             author={author}
           />
-          {this.state.posts.map((obj, i) => <PostComponent post={obj} key={i} author={author} />)}
+          {this.state.posts.map((obj, i) => (
+            <PostComponent post={obj} key={i} author={author} />
+          ))}
         </div>
       </SizeWrapper>
     );
